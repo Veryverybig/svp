@@ -109,9 +109,9 @@ field
     : direction_opt "logic" range_opt TK_ID range_opt ';'
         {
             $$ = new svp::Node(*$4, svp::NodeKind::FIELD);
-            $$->attrs.emplace_back("direction", *$1);
-            $$->attrs.emplace_back("packed", $3);
-            $$->attrs.emplace_back("unpacked", $5);
+            $$->attrs.emplace("direction", *$1);
+            $$->attrs.emplace("packed", $3);
+            $$->attrs.emplace("unpacked", $5);
             delete $1;
             delete $4;
         }
@@ -140,12 +140,16 @@ direction
 %%
 
 #include <iostream>
+#include "NodeVisitor.h"
 int main(int argc, char **argv) {
     if(argc > 1 && !strcmp(argv[1], "-debug"))
         yydebug = 1;
     FILE *fh = fopen("./test_file.sv", "r");
-    if(!fh)
+    if(!fh) {
         std::cout << "fail to open file\n";
+        return -1;
+    }
+        
 
     yyin = fh;
 
@@ -157,6 +161,9 @@ int main(int argc, char **argv) {
     fclose(fh);
 
     std::cout << *root;
+
+    svp::GenModuleVisitor m("demo");
+    m.processField(root->children.front().children.front(), root->children.front());
 
     return 0;
 }

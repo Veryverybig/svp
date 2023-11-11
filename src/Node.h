@@ -1,9 +1,10 @@
 #ifndef SVP_NODE_H
 #define SVP_NODE_H
 
+#include <vector>
 #include <map>
-
-#include "NodeAttr.h"
+#include <variant>
+#include <string>
 
 namespace svp
 {
@@ -25,6 +26,8 @@ static inline std::map<NodeKind, std::string> NodeKindString {
 
 class Node;
 using NodeList = std::vector<Node>;
+using NodeAttr = std::pair<std::string, std::variant<bool, int, std::string>>;
+using NodeAttrList = std::map<std::string, std::variant<bool, int, std::string>>;
 
 class Node {
 public:
@@ -35,6 +38,11 @@ public:
     NodeAttrList attrs;
 
     Node(const std::string &name, NodeKind kind);
+
+    bool hasAttr(const std::string &name) const;
+    int getAttrInt(const std::string &name) const;
+    bool getAttrBool(const std::string &name) const;
+    const std::string &getAttrString(const std::string &name) const;
 
     std::string toString() const;
 };

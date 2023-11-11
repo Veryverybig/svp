@@ -7,7 +7,7 @@
 
 WS      [ \t\n]
 ID      [_a-zA-Z][_a-zA-Z0-9]*
-NUM     [1-9][0-9]*
+NUM     0|[1-9][0-9]*
 
 %option noyywrap
 
