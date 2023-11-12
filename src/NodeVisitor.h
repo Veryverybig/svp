@@ -25,7 +25,10 @@ public:
 
 public:
     std::string filename;
+
+private:
     int indent = 0;
+    bool is_lastfield = false;
 };
 
 

@@ -163,7 +163,7 @@ int main(int argc, char **argv) {
     std::cout << *root;
 
     svp::GenModuleVisitor m("demo");
-    m.processField(root->children.front().children.front(), root->children.front());
+    m.visit(*root);
 
     return 0;
 }
