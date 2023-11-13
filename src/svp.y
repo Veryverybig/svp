@@ -165,5 +165,8 @@ int main(int argc, char **argv) {
     svp::GenModuleVisitor m("demo");
     m.visit(*root);
 
+    svp::GenInterfaceVisitor i;
+    i.visit(*root);
+
     return 0;
 }

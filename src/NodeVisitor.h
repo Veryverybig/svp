@@ -11,6 +11,14 @@ class NodeVisitor {
 public:
     virtual void visit(const Node &root) = 0;
     virtual ~NodeVisitor() = default;
+
+protected:
+    void addIndent(std::stringstream &ss) const;
+
+protected:
+    int indent = 0;
+    bool is_last_field = false;
+    bool is_last_interface = false;
 };
 
 
@@ -25,15 +33,14 @@ public:
 
 public:
     std::string filename;
-
-private:
-    int indent = 0;
-    bool is_lastfield = false;
 };
 
 
 class GenInterfaceVisitor :  public NodeVisitor {
+public:
+    void processInterface(const Node &node);
 
+    void visit(const Node &root) override;
 };
 
 
